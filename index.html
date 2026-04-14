@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CapyForge Games</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0a0a0f;
+      color: #e0ddd4;
+      font-family: 'Inter', system-ui, sans-serif;
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center;
+    }
+
+    /* ── Header ──────────────────────────────────── */
+    header {
+      text-align: center;
+      padding: 60px 20px 40px;
+    }
+    .logo {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 36px;
+      color: #ffcc44;
+      text-shadow: 2px 2px 0 #aa6600, 4px 4px 0 #553300;
+      margin-bottom: 8px;
+    }
+    .tagline {
+      font-size: 14px;
+      color: #887755;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* ── Games grid ──────────────────────────────── */
+    .games {
+      display: flex; flex-wrap: wrap; gap: 32px;
+      justify-content: center;
+      padding: 20px;
+      max-width: 900px;
+    }
+
+    .game-card {
+      width: 340px;
+      background: #16161f;
+      border: 1px solid #2a2a3a;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.2s, border-color 0.2s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .game-card:hover {
+      transform: translateY(-4px);
+      border-color: #ffcc44;
+    }
+
+    .game-card .banner {
+      height: 180px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 20px;
+    }
+    .game-card .banner.oni {
+      background: linear-gradient(135deg, #1a2a10 0%, #2d1f10 100%);
+      color: #cc2222;
+    }
+    .game-card .banner.space {
+      background: linear-gradient(135deg, #0a0a2a 0%, #1a0a2a 100%);
+      color: #4488ff;
+    }
+
+    .game-card .info {
+      padding: 16px;
+    }
+    .game-card .info h3 {
+      font-size: 16px; font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .game-card .info p {
+      font-size: 13px; color: #887766; line-height: 1.5;
+    }
+    .game-card .info .tag {
+      display: inline-block; margin-top: 8px;
+      font-size: 11px; padding: 3px 8px;
+      border-radius: 4px; font-weight: 600;
+    }
+    .tag.playable { background: #1a3a1a; color: #44cc44; }
+    .tag.dev { background: #3a2a1a; color: #ccaa44; }
+
+    /* ── Footer ──────────────────────────────────── */
+    footer {
+      margin-top: auto;
+      padding: 40px 20px;
+      text-align: center;
+      font-size: 12px;
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">CapyForge</div>
+    <div class="tagline">Games</div>
+  </header>
+
+  <section class="games">
+    <a class="game-card" href="../Onigoroshi/index.html">
+      <div class="banner oni">Onigoroshi</div>
+      <div class="info">
+        <h3>Onigoroshi</h3>
+        <p>A pixel art samurai RPG with RuneScape-style skilling. Hunt demons, forge weapons, master 12 skills.</p>
+        <span class="tag playable">Playable</span>
+      </div>
+    </a>
+
+    <a class="game-card" href="#">
+      <div class="banner space">[ Untitled ]</div>
+      <div class="info">
+        <h3>Untitled Space Game</h3>
+        <p>A space adventure with ships, planets, and exploration. Coming soon.</p>
+        <span class="tag dev">In Development</span>
+      </div>
+    </a>
+  </section>
+
+  <footer>
+    CapyForge Games &copy; 2026
+  </footer>
+</body>
+</html>
