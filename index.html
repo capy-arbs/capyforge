@@ -4,133 +4,392 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CapyForge Games</title>
+  <meta name="description" content="CapyForge Games — an indie studio crafting deep, systems-driven games. Play Astrova, a space exploration RPG built in Phaser 3." />
+  <meta property="og:title" content="CapyForge Games" />
+  <meta property="og:description" content="An indie studio crafting deep, systems-driven games. Play Astrova now." />
+  <meta property="og:type" content="website" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;500;600;700;800&display=swap');
+
+    :root {
+      --bg:        #07070c;
+      --panel:     #14141d;
+      --panel-2:   #1b1b28;
+      --border:    #2a2a3a;
+      --gold:      #ffcc44;
+      --gold-dim:  #aa8833;
+      --text:      #e6e3da;
+      --muted:     #8b8577;
+      --muted-2:   #6a6558;
+      --link:      #6fb0ff;
+      --green:     #46d17a;
+      --amber:     #e6b03a;
+    }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    html { scroll-behavior: smooth; }
+
     body {
-      background: #0a0a0f;
-      color: #e0ddd4;
+      background: var(--bg);
+      color: var(--text);
       font-family: 'Inter', system-ui, sans-serif;
       min-height: 100vh;
       display: flex; flex-direction: column; align-items: center;
+      line-height: 1.5;
+      overflow-x: hidden;
     }
+
+    /* ── Ambient background ──────────────────────── */
+    .bg-glow {
+      position: fixed; inset: 0; z-index: -2;
+      background:
+        radial-gradient(closest-side at 50% 0%, rgba(255,204,68,0.10), transparent 70%),
+        radial-gradient(closest-side at 15% 30%, rgba(80,120,255,0.08), transparent 60%),
+        radial-gradient(closest-side at 85% 60%, rgba(150,70,255,0.07), transparent 60%);
+      pointer-events: none;
+    }
+    .bg-stars {
+      position: fixed; inset: 0; z-index: -1;
+      background-image:
+        radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.7), transparent),
+        radial-gradient(1px 1px at 70% 20%, rgba(255,255,255,0.5), transparent),
+        radial-gradient(1px 1px at 40% 70%, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1px 1px at 90% 50%, rgba(255,255,255,0.4), transparent),
+        radial-gradient(1.5px 1.5px at 55% 85%, rgba(255,255,255,0.5), transparent),
+        radial-gradient(1px 1px at 10% 90%, rgba(255,255,255,0.4), transparent),
+        radial-gradient(1px 1px at 80% 80%, rgba(255,255,255,0.5), transparent);
+      background-size: 100% 100%;
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .wrap { width: 100%; max-width: 960px; padding: 0 20px; }
 
     /* ── Header ──────────────────────────────────── */
     header {
       text-align: center;
-      padding: 60px 20px 40px;
+      padding: 72px 20px 8px;
     }
     .logo {
       font-family: 'Press Start 2P', monospace;
-      font-size: 36px;
-      color: #ffcc44;
-      text-shadow: 2px 2px 0 #aa6600, 4px 4px 0 #553300;
-      margin-bottom: 8px;
+      font-size: clamp(30px, 7vw, 48px);
+      color: var(--gold);
+      text-shadow: 2px 2px 0 #aa6600, 4px 4px 0 #553300, 0 0 28px rgba(255,204,68,0.25);
+      letter-spacing: 1px;
+      line-height: 1.15;
     }
     .tagline {
-      font-size: 14px;
-      color: #887755;
-      letter-spacing: 2px;
+      margin-top: 18px;
+      font-size: 13px;
+      color: var(--gold-dim);
+      letter-spacing: 3px;
       text-transform: uppercase;
+      font-weight: 600;
     }
+    .blurb {
+      margin: 16px auto 0;
+      max-width: 520px;
+      font-size: 15px;
+      color: var(--muted);
+    }
+
+    section { width: 100%; display: flex; justify-content: center; }
+
+    .section-label {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 12px;
+      color: var(--gold);
+      letter-spacing: 1px;
+      margin: 56px 0 20px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .section-label::after {
+      content: ""; flex: 1; height: 1px;
+      background: linear-gradient(90deg, var(--border), transparent);
+    }
+
+    /* ── Featured game ───────────────────────────── */
+    .featured {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: linear-gradient(135deg, var(--panel) 0%, var(--panel-2) 100%);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .featured .art {
+      position: relative;
+      min-height: 260px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(90,150,255,0.35), transparent 55%),
+        radial-gradient(circle at 75% 70%, rgba(150,70,255,0.30), transparent 55%),
+        linear-gradient(160deg, #0b1030 0%, #1a0b2e 100%);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .featured .art::before {
+      /* starfield inside the art panel */
+      content: ""; position: absolute; inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 25% 20%, #fff, transparent),
+        radial-gradient(1px 1px at 60% 40%, rgba(255,255,255,0.7), transparent),
+        radial-gradient(1px 1px at 80% 25%, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1.5px 1.5px at 40% 75%, #fff, transparent),
+        radial-gradient(1px 1px at 15% 60%, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1px 1px at 90% 80%, rgba(255,255,255,0.5), transparent);
+      opacity: 0.7;
+    }
+    .featured .art .art-title {
+      position: relative;
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(20px, 4vw, 30px);
+      color: #cfe0ff;
+      text-shadow: 0 0 20px rgba(110,160,255,0.6);
+      letter-spacing: 1px;
+    }
+    .featured .body { padding: 30px 30px 34px; }
+    .featured .body h2 {
+      font-size: 24px; font-weight: 800; margin-bottom: 4px;
+    }
+    .featured .body .sub {
+      font-size: 13px; color: var(--muted-2); margin-bottom: 14px;
+    }
+    .featured .body p {
+      font-size: 14px; color: var(--muted); margin-bottom: 18px;
+    }
+
+    .stats {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px;
+    }
+    .stat {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 12px;
+      min-width: 78px;
+    }
+    .stat b { display: block; font-size: 16px; color: var(--text); font-weight: 700; }
+    .stat span { font-size: 11px; color: var(--muted-2); text-transform: uppercase; letter-spacing: 0.5px; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--gold);
+      color: #1a1200;
+      font-weight: 700; font-size: 15px;
+      padding: 12px 22px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+      box-shadow: 0 6px 20px rgba(255,204,68,0.18);
+    }
+    .btn:hover { transform: translateY(-2px); background: #ffd85f; box-shadow: 0 10px 28px rgba(255,204,68,0.30); }
+    .btn .arrow { transition: transform 0.15s; }
+    .btn:hover .arrow { transform: translateX(3px); }
 
     /* ── Games grid ──────────────────────────────── */
     .games {
-      display: flex; flex-wrap: wrap; gap: 32px;
-      justify-content: center;
-      padding: 20px;
-      max-width: 900px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      width: 100%;
     }
-
     .game-card {
-      width: 340px;
-      background: #16161f;
-      border: 1px solid #2a2a3a;
-      border-radius: 12px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
       overflow: hidden;
       transition: transform 0.2s, border-color 0.2s;
       text-decoration: none;
       color: inherit;
-      display: block;
+      display: flex; flex-direction: column;
     }
-    .game-card:hover {
-      transform: translateY(-4px);
-      border-color: #ffcc44;
-    }
+    a.game-card:hover { transform: translateY(-4px); border-color: var(--gold); }
 
     .game-card .banner {
-      height: 180px;
+      height: 130px;
       display: flex; align-items: center; justify-content: center;
       font-family: 'Press Start 2P', monospace;
-      font-size: 20px;
+      font-size: 17px;
+      position: relative;
+      text-align: center; padding: 0 10px;
     }
-    .game-card .banner.oni {
-      background: linear-gradient(135deg, #1a2a10 0%, #2d1f10 100%);
-      color: #cc2222;
+    .banner.oni {
+      background: radial-gradient(circle at 50% 120%, rgba(204,34,34,0.35), transparent 60%), linear-gradient(150deg, #1a2410 0%, #2d1710 100%);
+      color: #ff6a5a; text-shadow: 0 0 16px rgba(204,34,34,0.5);
     }
-    .game-card .banner.space {
-      background: linear-gradient(135deg, #0a0a2a 0%, #1a0a2a 100%);
-      color: #4488ff;
+    .banner.space {
+      background: radial-gradient(circle at 50% 120%, rgba(90,150,255,0.35), transparent 60%), linear-gradient(150deg, #0b1030 0%, #1a0b2e 100%);
+      color: #7fb0ff; text-shadow: 0 0 16px rgba(110,160,255,0.5);
+    }
+    .banner.night {
+      background: radial-gradient(circle at 50% 120%, rgba(120,220,255,0.28), transparent 60%), linear-gradient(150deg, #0a1a1f 0%, #1a1030 100%);
+      color: #66d8e6; text-shadow: 0 0 16px rgba(102,216,230,0.5);
     }
 
-    .game-card .info {
-      padding: 16px;
+    .game-card .info { padding: 16px 16px 18px; flex: 1; display: flex; flex-direction: column; }
+    .game-card .info h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+    .game-card .info p { font-size: 13px; color: var(--muted); line-height: 1.5; flex: 1; }
+
+    .tag {
+      align-self: flex-start;
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 12px;
+      font-size: 11px; padding: 4px 10px;
+      border-radius: 6px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.5px;
     }
-    .game-card .info h3 {
-      font-size: 16px; font-weight: 700;
-      margin-bottom: 6px;
+    .tag::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+    .tag.playable { background: rgba(70,209,122,0.12); color: var(--green); }
+    .tag.playable::before { box-shadow: 0 0 8px currentColor; animation: pulse 2s infinite; }
+    .tag.dev { background: rgba(230,176,58,0.12); color: var(--amber); }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+    /* ── Credits ─────────────────────────────────── */
+    .credits { flex-direction: column; align-items: stretch; }
+    .credits .intro { color: var(--muted-2); font-size: 13px; margin-bottom: 26px; max-width: 620px; }
+    .credit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
     }
-    .game-card .info p {
-      font-size: 13px; color: #887766; line-height: 1.5;
+    .credit-block {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 20px;
     }
-    .game-card .info .tag {
-      display: inline-block; margin-top: 8px;
-      font-size: 11px; padding: 3px 8px;
-      border-radius: 4px; font-weight: 600;
+    .credit-block h3 {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 11px; color: var(--gold);
+      margin-bottom: 14px;
+      border-left: 3px solid var(--gold);
+      padding-left: 10px;
     }
-    .tag.playable { background: #1a3a1a; color: #44cc44; }
-    .tag.dev { background: #3a2a1a; color: #ccaa44; }
+    .credit-block ul { list-style: none; }
+    .credit-block li { font-size: 13px; color: #b2ada0; padding: 5px 0; }
+    .credit-block li a { color: var(--link); text-decoration: none; }
+    .credit-block li a:hover { color: var(--gold); text-decoration: underline; }
+    .credit-block .none { color: var(--muted-2); font-style: italic; font-size: 13px; }
 
     /* ── Footer ──────────────────────────────────── */
     footer {
-      margin-top: auto;
-      padding: 40px 20px;
+      margin-top: 72px;
+      padding: 32px 20px 48px;
       text-align: center;
-      font-size: 12px;
-      color: #444;
+      font-size: 13px;
+      color: var(--muted-2);
+      width: 100%;
+      border-top: 1px solid var(--border);
+    }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--gold); }
+    footer .row { display: flex; gap: 18px; justify-content: center; margin-bottom: 12px; flex-wrap: wrap; }
+
+    @media (max-width: 620px) {
+      .featured { grid-template-columns: 1fr; }
+      .featured .art { min-height: 170px; }
     }
   </style>
 </head>
 <body>
+  <div class="bg-glow"></div>
+  <div class="bg-stars"></div>
+
   <header>
     <div class="logo">CapyForge</div>
     <div class="tagline">Games</div>
+    <p class="blurb">An indie studio crafting deep, systems-driven worlds — one hand-forged mechanic at a time.</p>
   </header>
 
-  <section class="games">
-    <a class="game-card" href="https://capy-arbs.github.io/Onigoroshi/">
-      <div class="banner oni">Onigoroshi</div>
-      <div class="info">
-        <h3>Onigoroshi</h3>
-        <p>A pixel art samurai RPG with RuneScape-style skilling. Hunt demons, forge weapons, master 12 skills.</p>
-        <span class="tag playable">Playable</span>
+  <!-- ── Featured: Astrova ─────────────────────── -->
+  <section class="wrap">
+    <div class="section-label">Now Playing</div>
+    <div class="featured">
+      <div class="art"><span class="art-title">ASTROVA</span></div>
+      <div class="body">
+        <h2>Astrova</h2>
+        <div class="sub">Space exploration RPG · Phaser 3 · playable now, multiplayer in v1.0</div>
+        <p>Fly a real-scale solar frontier: level skills, build a fleet, run contraband, and uncover three pre-human civilizations drifting through the dark. No shields — every hit is real.</p>
+        <div class="stats">
+          <div class="stat"><b>~1,390</b><span>Systems</span></div>
+          <div class="stat"><b>67</b><span>Ships</span></div>
+          <div class="stat"><b>23</b><span>Skills</span></div>
+          <div class="stat"><b>10</b><span>Factions</span></div>
+        </div>
+        <a class="btn" href="https://playastrova.com/" target="_blank" rel="noopener">Play Now <span class="arrow">→</span></a>
       </div>
-    </a>
+    </div>
+  </section>
 
-    <a class="game-card" href="https://capy-arbs.github.io/astrova/">
-      <div class="banner space">Astrova</div>
-      <div class="info">
-        <h3>Astrova</h3>
-        <p>A space exploration RPG. 7 star systems, 17 ships, 15 skills, smuggling, trading, and carrier drones.</p>
-        <span class="tag playable">Playable</span>
+  <!-- ── The library ───────────────────────────── -->
+  <section class="wrap">
+    <div class="section-label">The Library</div>
+    <div class="games">
+      <a class="game-card" href="https://playastrova.com/" target="_blank" rel="noopener">
+        <div class="banner space">Astrova</div>
+        <div class="info">
+          <h3>Astrova</h3>
+          <p>A real-scale space exploration RPG. Skilling, crafting, smuggling, faction politics, and fleet combat with zero shields.</p>
+          <span class="tag playable">Playable</span>
+        </div>
+      </a>
+
+      <div class="game-card">
+        <div class="banner oni">Onigoroshi</div>
+        <div class="info">
+          <h3>Onigoroshi</h3>
+          <p>A pixel-art samurai action RPG with RuneScape-style skilling. Hunt oni, forge weapons, master 12 skills.</p>
+          <span class="tag dev">In Development</span>
+        </div>
       </div>
-    </a>
+
+      <div class="game-card">
+        <div class="banner night">Nightglass</div>
+        <div class="info">
+          <h3>Nightglass</h3>
+          <p>An isometric cyberpunk ARPG — a rain-slick, neon-drenched city with server-authoritative multiplayer at its core.</p>
+          <span class="tag dev">In Development</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Asset credits ─────────────────────────── -->
+  <section class="wrap credits">
+    <div class="section-label">Asset Credits</div>
+    <p class="intro">Our games stand on the work of extraordinarily talented artists and sound designers. Huge thanks to everyone below.</p>
+    <div class="credit-grid">
+      <div class="credit-block">
+        <h3>Astrova</h3>
+        <ul>
+          <li><a href="https://itch.io/s/172849/collapse-of-sol-hegemony-complete-bundle" target="_blank" rel="noopener">Collapse of Sol Hegemony</a> &mdash; NBSW</li>
+          <li><a href="https://frostwindz.itch.io/pixel-art-sci-fi-spaceships" target="_blank" rel="noopener">Pixel Art Sci-Fi Spaceships</a> &mdash; Frostwindz</li>
+          <li><a href="https://foozlecc.itch.io/" target="_blank" rel="noopener">Void Collection</a> &mdash; Foozle</li>
+          <li><a href="https://kenney.nl/assets/planets" target="_blank" rel="noopener">Planets</a> &mdash; Kenney &amp; Helianthus Games</li>
+          <li><a href="https://saraspiegelberg.itch.io/free-pixel-art-character-asset-astronaut" target="_blank" rel="noopener">Astronaut</a> &mdash; Sara Spiegelberg</li>
+          <li><a href="https://kenney.nl/assets/sci-fi-sounds" target="_blank" rel="noopener">Sci-Fi &amp; Interface SFX</a> &mdash; Kenney (CC0)</li>
+        </ul>
+      </div>
+      <div class="credit-block">
+        <h3>Onigoroshi</h3>
+        <ul>
+          <li><a href="https://pixel-boy.itch.io/ninja-adventure-asset-pack" target="_blank" rel="noopener">Ninja Adventure Asset Pack</a> &mdash; Pixel-Boy &amp; AAA</li>
+        </ul>
+      </div>
+      <div class="credit-block">
+        <h3>Nightglass</h3>
+        <p class="none">In development — asset credits coming soon.</p>
+      </div>
+    </div>
   </section>
 
   <footer>
-    CapyForge Games &copy; 2026
+    <div class="row">
+      <a href="https://playastrova.com/" target="_blank" rel="noopener">Play Astrova</a>
+      <a href="https://github.com/capy-arbs/capyforge" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    CapyForge Games &copy; 2026 · Built with Phaser 3 &amp; a lot of coffee
   </footer>
 </body>
 </html>

@@ -1,13 +1,21 @@
 # CapyForge Games
 
-Landing page for CapyForge Games, the games-publishing arm of CapyBearHug LLC. A single static HTML page with inline CSS, deployed via GitHub Pages.
+The landing page for **CapyForge Games** — an indie studio crafting deep, systems-driven worlds.
+
+🌐 **Live:** [capy-arbs.github.io/capyforge](https://capy-arbs.github.io/capyforge/)
 
 ## Titles
 
-- **Astrova** — multiplayer space exploration RPG, built in Phaser 3, self-hosted. [Play](https://playastrova.com)
-- **Onigoroshi** — pixel-art action RPG, built in Phaser 3.
-- **Nightglass** — in development.
+| Game | Genre | Status | Play |
+|------|-------|--------|------|
+| **Astrova** | Space exploration RPG (Phaser 3) | Playable · multiplayer in v1.0 | [playastrova.com](https://playastrova.com/) |
+| **Onigoroshi** | Pixel-art samurai action RPG (Phaser 3) | In development | — |
+| **Nightglass** | Isometric cyberpunk ARPG (Godot 4) | In development | — |
 
 ## Stack
 
-Pure HTML with inline CSS. No build system, no JavaScript. Edit `index.html` directly to update.
+A single static `index.html` with inline CSS — no build system, no JavaScript. Deployed via GitHub Pages. Edit `index.html` directly to update the page.
+
+---
+
+*A CapyForge Games project · © 2026*
