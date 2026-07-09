@@ -94,7 +94,7 @@
       color: var(--muted);
     }
 
-    section { width: 100%; display: flex; justify-content: center; }
+    section { width: 100%; display: flex; flex-direction: column; align-items: stretch; }
 
     .section-label {
       font-family: 'Press Start 2P', monospace;
@@ -120,7 +120,7 @@
     }
     .featured .art {
       position: relative;
-      min-height: 260px;
+      min-height: 230px;
       background:
         radial-gradient(circle at 30% 30%, rgba(90,150,255,0.35), transparent 55%),
         radial-gradient(circle at 75% 70%, rgba(150,70,255,0.30), transparent 55%),
@@ -148,7 +148,7 @@
       text-shadow: 0 0 20px rgba(110,160,255,0.6);
       letter-spacing: 1px;
     }
-    .featured .body { padding: 30px 30px 34px; }
+    .featured .body { padding: 26px 30px 30px; }
     .featured .body h2 {
       font-size: 24px; font-weight: 800; margin-bottom: 4px;
     }
@@ -324,17 +324,8 @@
 
   <!-- ── The library ───────────────────────────── -->
   <section class="wrap">
-    <div class="section-label">The Library</div>
+    <div class="section-label">Also In The Forge</div>
     <div class="games">
-      <a class="game-card" href="https://playastrova.com/" target="_blank" rel="noopener">
-        <div class="banner space">Astrova</div>
-        <div class="info">
-          <h3>Astrova</h3>
-          <p>A real-scale space exploration RPG. Skilling, crafting, smuggling, faction politics, and fleet combat with zero shields.</p>
-          <span class="tag playable">Playable</span>
-        </div>
-      </a>
-
       <div class="game-card">
         <div class="banner oni">Onigoroshi</div>
         <div class="info">
