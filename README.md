@@ -2,7 +2,7 @@
 
 The landing page for **CapyForge Games**: an indie studio crafting deep, systems-driven worlds.
 
-🌐 **Live:** [capy-arbs.github.io/capyforge](https://capy-arbs.github.io/capyforge/)
+**Live:** [capy-arbs.github.io/capyforge](https://capy-arbs.github.io/capyforge/)
 
 ## Titles
 
